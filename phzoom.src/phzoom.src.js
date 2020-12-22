@@ -2,59 +2,110 @@
  * @name jQuery phZoom Plugin
  * @version 1.292 Final
  * @create 2011.7.10
- * @lastmodified 2012.1.6
+ * @lastmodified 2020.12.22
  * @description Based on jQuery 1.4+
  * @author Phoetry (http://phoetry.me)
  * @url http://phoetry.me/archives/phzoom.html
+ * @modify DerekSong (https://www.dadclab.com)
+ * @url https://www.dadclab.com/archives/7661.jiecao
  **/
 ~function($){var
 /** 
  * @param LAY:遮罩层, ZOOM:大图容器, PHZOOM:构造主函数
  * @param e:当前对象, x:插件设置, y:当前index, z:对象集合
  **/
-W=$(window),D=$(document),
-LAY=$('<div id=ph_lay/>'),
-ZOOM=$('<div id=ph_zoom/>'),
-BOTH=LAY.add(ZOOM),
-PHZOOM=function(e,x,y,z){
-	this.opt=x;
-	this.idx=y;
-	this.all=z;
-	this.len=z.length;
-	// 当前e为对象集合末项时:false
-	this.end=this.len>y+1;
-	// 获取当前e的小图(返回jQuery)
-	this.img=$('img:first',e);
-	// 初始化当前e并绑定事件(返回DOM)
-	this.lnk=e.addClass('phzoom').unbind('click').bind(this.imgFn())
-		.append(this.hov=$('<span class=ph_hover/>').hide())[0];
-	// cap:大图底部的标题+索引+上/下一张(合体)
-	this.cap=$('<div/>',{
-		css:{color:x.capColor},
-		id:'ph_cap',
-		html:$([
-			$('<span/>',{//标题
-				id:'ph_txt',
-				text:this.img[0].title||this.lnk.title||'No title'
-			})[0],
-			$('<span/>',{//索引
-				id:'ph_idx',
-				text:y+1+' / '+this.len
-			})[0]
-		])
-	}).add(
-	// nav:上/下一张
-	this.nav=$('<div/>',{
-		id:'ph_nav',
-		css:{color:x.navColor},
-		html:(y?'<span id=ph_prev>'+x.prevText+'</span>':'')
-			+(this.end?'<span id=ph_next>'+x.nextText+'</span>':'')
-	}));
-	// 点击页面上随便哪里都能退出(后面会排除大图区域)
-	BOTH.click($.proxy(this,'imgQuit'));
-	// 尝试Fix IE6下hover可能错位的BUG
-	window.XMLHttpRequest||e.height(this.img.height());
-};
+V=jQuery.fn.jquery,
+VX = V.split("."),
+W=$(window),D=$(document);
+
+if(VX[0] >= 3 || VX[1] >= 5){
+    var LAY=$('<div id=ph_lay></div>'),
+    ZOOM=$('<div id=ph_zoom></div>'),
+    BOTH=LAY.add(ZOOM)
+    var PHZOOM=function(e,x,y,z){
+        this.opt=x;
+        this.idx=y;
+        this.all=z;
+        this.len=z.length;
+        // 当前e为对象集合末项时:false
+        this.end=this.len>y+1;
+        // 获取当前e的小图(返回jQuery)
+        this.img=$('img:first',e);
+        // 初始化当前e并绑定事件(返回DOM)
+        this.lnk=e.addClass('phzoom').unbind('click').bind(this.imgFn())
+            .append(this.hov=$('<span class=ph_hover></span>').hide())[0];
+        // cap:大图底部的标题+索引+上/下一张(合体)
+        this.cap=$('<div>',{
+            css:{color:x.capColor},
+            id:'ph_cap',
+            html:$([
+                $('<span>',{//标题
+                    id:'ph_txt',
+                    text:this.img[0].title||this.lnk.title||'No title'
+                })[0],
+                $('<span>',{//索引
+                    id:'ph_idx',
+                    text:y+1+' / '+this.len
+                })[0]
+            ])
+        }).add(
+        // nav:上/下一张
+        this.nav=$('<div>',{
+            id:'ph_nav',
+            css:{color:x.navColor},
+            html:(y?'<span id=ph_prev>'+x.prevText+'</span>':'')
+                +(this.end?'<span id=ph_next>'+x.nextText+'</span>':'')
+        }));
+        // 点击页面上随便哪里都能退出(后面会排除大图区域)
+        BOTH.click($.proxy(this,'imgQuit'));
+        // 尝试Fix IE6下hover可能错位的BUG
+        window.XMLHttpRequest||e.height(this.img.height());
+    };
+}else{
+    var LAY=$('<div id=ph_lay/>'),
+        ZOOM=$('<div id=ph_zoom/>'),
+        BOTH=LAY.add(ZOOM),
+        PHZOOM=function(e,x,y,z){
+        this.opt=x;
+        this.idx=y;
+        this.all=z;
+        this.len=z.length;
+        // 当前e为对象集合末项时:false
+        this.end=this.len>y+1;
+        // 获取当前e的小图(返回jQuery)
+        this.img=$('img:first',e);
+        // 初始化当前e并绑定事件(返回DOM)
+        this.lnk=e.addClass('phzoom').unbind('click').bind(this.imgFn())
+            .append(this.hov=$('<span class=ph_hover/>').hide())[0];
+        // cap:大图底部的标题+索引+上/下一张(合体)
+        this.cap=$('<div/>',{
+            css:{color:x.capColor},
+            id:'ph_cap',
+            html:$([
+                $('<span/>',{//标题
+                    id:'ph_txt',
+                    text:this.img[0].title||this.lnk.title||'No title'
+                })[0],
+                $('<span/>',{//索引
+                    id:'ph_idx',
+                    text:y+1+' / '+this.len
+                })[0]
+            ])
+        }).add(
+        // nav:上/下一张
+        this.nav=$('<div/>',{
+            id:'ph_nav',
+            css:{color:x.navColor},
+            html:(y?'<span id=ph_prev>'+x.prevText+'</span>':'')
+                +(this.end?'<span id=ph_next>'+x.nextText+'</span>':'')
+        }));
+        // 点击页面上随便哪里都能退出(后面会排除大图区域)
+        BOTH.click($.proxy(this,'imgQuit'));
+        // 尝试Fix IE6下hover可能错位的BUG
+        window.XMLHttpRequest||e.height(this.img.height());
+    };
+}
+
 /** 
  * prototype of PHZOOM function
  * @param B:new Image, $B:B的jQuery对象
