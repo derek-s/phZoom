@@ -33,3 +33,14 @@
 * * *
 感谢你的支持与反馈 :)   
 作者: [Phoetry](http://phoetry.me)
+
+---
+
+## 更新
+
+自jQuery 3.5.0更新，jQuery.htmlPrefilter中不再使用正则表达式，在Wordpress 5.6开始，jQuery 3.5+被引入。
+
+原作者在2012.1.6之后没有再更新过该插件，于是fork一下修改一番，以求同时兼容jQuery 1.4/3.5。
+
+使用方法与设置选项等都与原作插件一致。
+
